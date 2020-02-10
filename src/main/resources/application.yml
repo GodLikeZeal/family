@@ -1,0 +1,22 @@
+
+debug: false
+
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: family
+  main:
+    allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
+  data:
+    mongodb:
+      host: xx.xx.xx.xx
+      port: 27017
+      database: family
+
+beetl:
+  suffix: html
+
