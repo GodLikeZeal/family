@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>成员列表 - 张家坎族谱系统</title>
+    <link rel="icon" href="favicon.ico" type="image/ico">
+    <meta name="keywords" content="张家坎族谱系统">
+    <meta name="description" content="张家坎族谱系统">
+    <meta name="author" content="zeal">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select\@1.13.9/dist/css/bootstrap-select.min.css">
+    <link href="css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body class="lyear-layout-sidebar-close">
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!--左侧导航-->
+        <aside class="lyear-layout-sidebar">
+
+            <!-- logo -->
+            <div id="logo" class="sidebar-header">
+                <a href="index.html">
+                    <h4 class="h4 text-primary">张家坎族谱管理系统</h4>
+                </a>
+            </div>
+            <div class="lyear-layout-sidebar-scroll">
+
+                <nav class="sidebar-main">
+                    <ul class="nav nav-drawer">
+                        <li class="nav-item active"><a href="/index.html"><i class="mdi mdi-home"></i> 族谱树</a></li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-account"></i> 成员管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="/list.html">成员列表</a></li>
+                                <li><a href="/add.html">成员添加</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-item-has-subnav">
+                            <a href="javascript:void(0)"><i class="mdi mdi-account-multiple"></i> 分组管理</a>
+                            <ul class="nav nav-subnav">
+                                <li><a href="/group_add.html">群组添加</a></li>
+                                <li><a href="/group_list.html">群组列表</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </aside>
+        <!--End 左侧导航-->
+
+        <!--头部信息-->
+        <header class="lyear-layout-header">
+
+            <nav class="navbar navbar-default">
+                <div class="topbar">
+
+                    <div class="topbar-left">
+                        <div class="lyear-aside-toggler">
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                            <span class="lyear-toggler-bar"></span>
+                        </div>
+                        <span class="navbar-page-title"> 后台首页 </span>
+                    </div>
+
+                    <ul class="topbar-right">
+                        <li class="dropdown dropdown-profile">
+                            <a href="javascript:void(0)" data-toggle="dropdown">
+                                <span>笔下光年 <span class="caret"></span></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a></li>
+                                <li><a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
+                                </li>
+                                <li><a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
+                                <li class="divider"></li>
+                                <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+
+        </header>
+        <!--End 头部信息-->
+
+        <!--页面主要内容-->
+        <main class="lyear-layout-content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-toolbar clearfix">
+                                <form class="form-inline pull-right" action="lyear_forms_elements.html" method="post"
+                                      onsubmit="return false;">
+                                    <div class="form-group">
+                                        <select class="form-control selectpicker" data-live-search="true">
+                                            <option>选择分组</option>
+                                            <option data-tokens="xiongergong" value="1">熊二公分支</option>
+                                            <option data-tokens="xiongsangong" value="2">熊三公分支</option>
+                                            <option data-tokens="tiemen" value="3">铁门</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="name">姓名</label>
+                                        <input class="form-control" type="text" id="name" name="name"
+                                               placeholder="姓名..">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-default" type="submit">查询</button>
+                                    </div>
+                                </form>
+                                <div class="toolbar-btn-action">
+                                    <a class="btn btn-primary m-r-5" href="add.html"><i class="mdi mdi-plus"></i> 新增</a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>姓名</th>
+                                            <th>性别</th>
+                                            <th>配偶</th>
+                                            <th>父节点</th>
+                                            <th>分组</th>
+                                            <th>备注</th>
+                                            <th>录入日期</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @ for(user in page.data){
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.name}</td>
+                                            <td>${user.gender}</td>
+                                            <td>${user.spouse}</td>
+                                            <td>${user.parentId}</td>
+                                            <td>${user.groupId}</td>
+                                            <td>${user.introduction}</td>
+                                            <td>${user.createDate}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-xs btn-default" href="#!" title="编辑"
+                                                       data-toggle="tooltip"><i
+                                                            class="mdi mdi-pencil"></i></a>
+                                                    <a class="btn btn-xs btn-default" href="#!" title="删除"
+                                                       data-toggle="tooltip"><i
+                                                            class="mdi mdi-window-close"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @ }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <ul class="pagination pagination-circle">
+                                    <li>
+                                        <a href="#!">
+                                            <span><i class="mdi mdi-chevron-left"></i></span>
+                                        </a>
+                                    </li>
+                                    @ for(var i=1;i<=page.total;i++){
+                                    <li class="${i == page.pageNumber?'active'}"><a href="/list.html?pageNumber=${page.pageNumber}&pageSize=${page.pageSize}">${i}</a></li>
+                                    @ }
+                                    <li>
+                                        <a href="#!">
+                                            <span><i class="mdi mdi-chevron-right"></i></span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+        <!--End 页面主要内容-->
+    </div>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select\@1.13.9/dist/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="js/main.min.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    $('.search-bar .dropdown-menu a').click(function () {
+      var field = $(this).data('field') || ''
+      $('#search-field').val(field)
+      $('#search-btn').html($(this).text() + ' <span class="caret"></span>')
+    })
+  })
+
+</script>
+</body>
+
+</html>
