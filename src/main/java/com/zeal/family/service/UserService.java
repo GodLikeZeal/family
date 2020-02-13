@@ -147,7 +147,7 @@ public class UserService {
     while (iterator.hasNext()) {
       UserBo userBo = iterator.next();
       if (id.equals(userBo.getParentId())) {
-        iterator.remove();
+//        iterator.remove();
         userBo.setChildren(treeCreate(userBo.getId(), userBos));
         bos.add(userBo);
       }

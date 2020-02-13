@@ -108,21 +108,21 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th>编号</th>
-                                            <th>名称</th>
-                                            <th>备注</th>
-                                            <th>录入日期</th>
-                                            <th>操作</th>
+                                            <th class="text-center" style='width:10%;'>编号</th>
+                                            <th class="text-center" style='width:10%;'>名称</th>
+                                            <th class="text-center" style='width:60%;'>备注</th>
+                                            <th class="text-center" style='width:10%;'>录入日期</th>
+                                            <th class="text-center" style='width:10%;'>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @ for(group in page.data){
                                         <tr>
-                                            <td>${groupLP.index}</td>
-                                            <td>${group.name}</td>
-                                            <td>${group.introduction}</td>
-                                            <td>${group.createDate}</td>
-                                            <td>
+                                            <td class="text-center">${groupLP.index}</td>
+                                            <td class="text-center">${group.name}</td>
+                                            <td class="text-center">${group.introduction}</td>
+                                            <td class="text-center">${group.createDate}</td>
+                                            <td class="text-center">
                                                 <div class="btn-group">
                                                     <a class="btn btn-xs btn-default" href="/group_edit.html?id=${group.id}" title="编辑"
                                                        data-toggle="tooltip"><i
@@ -141,15 +141,34 @@
                                 </div>
                                 <ul class="pagination pagination-circle">
                                     <li>
-                                        <a href="#!">
+                                        <a href="/list.html?pageNumber=${page.pageNumber-1>0?page.pageNumber-1:1}&pageSize=${page.pageSize}">
                                             <span><i class="mdi mdi-chevron-left"></i></span>
                                         </a>
                                     </li>
+                                    @ if(page.total>8){
+                                    <li><a
+                                            href="/list.html?pageNumber=${page.pageNumber-2}&pageSize=${page.pageSize}">${page.pageNumber-2}</a>
+                                    </li>
+                                    <li><a
+                                            href="/list.html?pageNumber=${page.pageNumber-1}&pageSize=${page.pageSize}">${page.pageNumber-1}</a>
+                                    </li>
+                                    <li class="active"><a
+                                            href="/list.html?pageNumber=${page.pageNumber}&pageSize=${page.pageSize}">${page.pageNumber}</a>
+                                    </li>
+                                    <li><a
+                                            href="/list.html?pageNumber=${page.pageNumber+1}&pageSize=${page.pageSize}">${page.pageNumber+1}</a>
+                                    </li>
+                                    <li><a
+                                            href="/list.html?pageNumber=${page.pageNumber+2}&pageSize=${page.pageSize}">${page.pageNumber+2}</a>
+                                    </li>
+                                    @ } else{
                                     @ for(var i=1;i<=page.total;i++){
-                                    <li class="${i == page.pageNumber?'active'}"><a href="/group/list.html?pageNumber=${page.pageNumber}&pageSize=${page.pageSize}">${i}</a></li>
-                                    @ }
+                                    <li class="${i == page.pageNumber?'active'}"><a
+                                            href="/list.html?pageNumber=${i}&pageSize=${page.pageSize}">${i}</a>
+                                    </li>
+                                    @ }}
                                     <li>
-                                        <a href="#!">
+                                        <a href="/list.html?pageNumber=${page.pageNumber+1<=page.total?page.pageNumber+1:1}&pageSize=${page.pageSize}">
                                             <span><i class="mdi mdi-chevron-right"></i></span>
                                         </a>
                                     </li>
