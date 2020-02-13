@@ -82,6 +82,11 @@ public class User {
   private String groupId;
 
   /**
+   * 分组名称.
+   */
+  private String groupName;
+
+  /**
    * 创建时间.
    */
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")

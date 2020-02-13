@@ -9,11 +9,13 @@
     <meta name="keywords" content="张家坎族谱系统">
     <meta name="description" content="张家坎族谱系统">
     <meta name="author" content="zeal">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-select\@1.13.9/dist/css/bootstrap-select.min.css">
-    <link href="css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="/css/materialdesignicons.min.css" rel="stylesheet">
+    <!--对话框-->
+    <link rel="stylesheet" href="/js/jconfirm/jquery-confirm.min.css">
+    <link href="/css/style.min.css" rel="stylesheet">
 </head>
 
 <body class="lyear-layout-sidebar-close">
@@ -72,15 +74,11 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>笔下光年 <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}  <span
+                                        class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a></li>
-                                <li><a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
-                                </li>
-                                <li><a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
-                                <li class="divider"></li>
-                                <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
                                 </li>
                             </ul>
                         </li>
@@ -101,14 +99,14 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-toolbar clearfix">
-                                <form class="form-inline pull-right" action="lyear_forms_elements.html" method="post"
-                                      onsubmit="return false;">
+                                <form class="form-inline pull-right" action="/list.html" method="get">
                                     <div class="form-group">
-                                        <select class="form-control selectpicker" data-live-search="true">
-                                            <option>选择分组</option>
-                                            <option data-tokens="xiongergong" value="1">熊二公分支</option>
-                                            <option data-tokens="xiongsangong" value="2">熊三公分支</option>
-                                            <option data-tokens="tiemen" value="3">铁门</option>
+                                        <select class="form-control selectpicker" name="groupId"
+                                                data-live-search="true">
+                                            <option value="">选择分组</option>
+                                            @ for(group in groups){
+                                            <option value="${group.id}">${group.name}</option>
+                                            @ }
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -144,20 +142,21 @@
                                         <tbody>
                                         @ for(user in page.data){
                                         <tr>
-                                            <td>${user.id}</td>
+                                            <td>${userLP.index}</td>
                                             <td>${user.name}</td>
-                                            <td>${user.gender}</td>
+                                            <td>${user.gender == "MALE"?"男":""}</td>
                                             <td>${user.spouse}</td>
-                                            <td>${user.parentId}</td>
-                                            <td>${user.groupId}</td>
+                                            <td>${user.parentName}</td>
+                                            <td>${user.groupName}</td>
                                             <td>${user.introduction}</td>
                                             <td>${user.createDate}</td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="#!" title="编辑"
+                                                    <a class="btn btn-xs btn-default" href="/edit.html?id=${user.id}"
+                                                       title="编辑"
                                                        data-toggle="tooltip"><i
                                                             class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" href="#!" title="删除"
+                                                    <a class="btn btn-xs btn-default"  onclick="remove('${user.id}')" title="删除"
                                                        data-toggle="tooltip"><i
                                                             class="mdi mdi-window-close"></i></a>
                                                 </div>
@@ -175,7 +174,9 @@
                                         </a>
                                     </li>
                                     @ for(var i=1;i<=page.total;i++){
-                                    <li class="${i == page.pageNumber?'active'}"><a href="/list.html?pageNumber=${page.pageNumber}&pageSize=${page.pageSize}">${i}</a></li>
+                                    <li class="${i == page.pageNumber?'active'}"><a
+                                            href="/list.html?pageNumber=${page.pageNumber}&pageSize=${page.pageSize}">${i}</a>
+                                    </li>
                                     @ }
                                     <li>
                                         <a href="#!">
@@ -196,20 +197,37 @@
     </div>
 </div>
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select\@1.13.9/dist/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="js/main.min.js"></script>
+<script type="text/javascript" src="/js/perfect-scrollbar.min.js"></script>
+<!--对话框-->
+<script src="/js/jconfirm/jquery-confirm.min.js"></script>
+<script type="text/javascript" src="/js/main.min.js"></script>
 
 <script type="text/javascript">
-  $(function () {
-    $('.search-bar .dropdown-menu a').click(function () {
-      var field = $(this).data('field') || ''
-      $('#search-field').val(field)
-      $('#search-btn').html($(this).text() + ' <span class="caret"></span>')
+  function remove (id) {
+    $.confirm({
+      title: '操作提示',
+      content: '确定要删除吗？',
+      buttons: {
+        confirm: {
+          text: '确定',
+          action: function () {
+            $.get("user/delete/"+id, function(data){
+              window.location.reload()
+            });
+          }
+        },
+        cancel: {
+          text: '取消',
+          action: function () {
+
+          }
+        }
+      }
     })
-  })
+  }
 
 </script>
 </body>

@@ -81,15 +81,11 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>笔下光年 <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username} <span
+                                        class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a></li>
-                                <li><a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
-                                </li>
-                                <li><a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
-                                <li class="divider"></li>
-                                <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
                                 </li>
                             </ul>
                         </li>
@@ -126,239 +122,184 @@
 <!--图表插件-->
 <script type="text/javascript" src="js/Chart.js"></script>
 <script type="text/javascript">
+  $(document).ready(function (e) {
+    const width = document.getElementById('container').scrollWidth
+    const height = document.getElementById('container').scrollHeight || 600
 
-
-  fetch('https://gw.alipayobjects.com/os/antvdemo/assets/data/algorithm-category.json')
-    .then(res => res.json())
-    .then(data => {
-        const width = document.getElementById('container').scrollWidth
-        const height = document.getElementById('container').scrollHeight || 600
-
-        const graph = new G6.TreeGraph({
-          container: 'container',
-          width,
-          height,
-          pixelRatio: 2,
-          linkCenter: true,
-          modes: {
-            default: [{
-              type: 'collapse-expand',
-              onChange: function onChange (item, collapsed) {
-                const data = item.get('model').data
-                data.collapsed = collapsed
-                return true
-              }
-            },
-              {
-                type: 'tooltip',
-                formatText: function formatText (model) {
-                  const text = '<div class="card"><div class="card-header bg-primary"><h4 class="text-center">' + model.label.split('[')[0] + '</h4></div><div class="card-body"><h6><span>性别：</span><span>' + model.gender + '</span></h6><h6><span>配偶：</span><span>' + model.spouse + '</span></h6><h6><span>备注：</span><span>' + model.introduction + '</span></h6></div></div>'
-                  return text
-                }
-              },
-              {
-                type: 'edge-tooltip',
-                formatText: function formatText (model) {
-                  const text = 'description: ' + model.label
-                  return text
-                }
-              }, 'drag-canvas', 'zoom-canvas']
-          },
-          defaultNode: {
-            shape: 'ellipse',
-            size: [50, 30],
-            color: '#40a9ff',
-            subTreeSep: 20,
-            anchorPoints: [[0, 0.5], [1, 0.5]],
-            style: {
-              fill: '#C6E5FF',
-              stroke: '#5B8FF9'
-            },
-            labelCfg: {
-              position: 'center'
+    const graph = new G6.TreeGraph({
+      container: 'container',
+      width,
+      height,
+      pixelRatio: 2,
+      linkCenter: true,
+      modes: {
+        default: [{
+          type: 'collapse-expand',
+          onChange: function onChange (item, collapsed) {
+            const data = item.get('model').data
+            data.collapsed = collapsed
+            return true
+          }
+        },
+          {
+            type: 'tooltip',
+            formatText: function formatText (model) {
+              const text = '<div class="card"><div class="card-header bg-primary"><h4 class="text-center">' + model.name.split('[')[0] + '</h4></div><div class="card-body"><h6><span>性别：</span><span>' + model.gender + '</span></h6><h6><span>配偶：</span><span>' + model.spouse + '</span></h6><h6><span>备注：</span><span>' + model.introduction + '</span></h6></div></div>'
+              return text
             }
           },
-          defaultEdge: {
-            shape: 'cubic-vertical',
-            style: {
-              stroke: '#A3B1BF'
+          {
+            type: 'edge-tooltip',
+            formatText: function formatText (model) {
+              const text = 'description: ' + model.label
+              return text
             }
-          },
-          layout: {
-            type: 'compactBox',
-            direction: 'TB', // H / V / LR / RL / TB / BT
-            nodeSep: 50,
-            rankSep: 100
-          }
-        })
-
-        G6.registerNode('circle-animate', {
-          afterDraw (cfg, group) {
-            const shape = group.get('children')[0]
-            shape.animate({
-              repeat: true,
-              onFrame (ratio) {
-                const diff = ratio <= 0.5 ? ratio * 10 : (1 - ratio) * 10
-                return {
-                  rx: cfg.size[0] / 2 + diff,
-                  ry: cfg.size[1] / 2 + diff,
-                }
-              }
-            }, 3000, 'easeCubic')
-          }
-        }, 'circle')
-
-        // 背景动画
-        G6.registerNode('background-animate', {
-          afterDraw (cfg, group) {
-            const rx = cfg.size[0] / 2
-            const ry = cfg.size[1] / 2
-            const back1 = group.addShape('ellipse', {
-              zIndex: -3,
-              attrs: {
-                x: 0,
-                y: 0,
-                rx,
-                ry,
-                fill: cfg.color,
-                opacity: 0.6
-              }
-            })
-            const back2 = group.addShape('ellipse', {
-              zIndex: -2,
-              attrs: {
-                x: 0,
-                y: 0,
-                rx,
-                ry,
-                fill: cfg.color,
-                opacity: 0.6
-              }
-            })
-            const back3 = group.addShape('ellipse', {
-              zIndex: -1,
-              attrs: {
-                x: 0,
-                y: 0,
-                rx,
-                ry,
-                fill: cfg.color,
-                opacity: 0.6
-              }
-            })
-            group.sort() // 排序，根据 zIndex 排序
-            back1.animate({ // 逐渐放大，并消失
-              rx: rx + 10,
-              ry: ry + 10,
-              opacity: 0.1,
-              repeat: true // 循环
-            }, 3000, 'easeCubic', null, 0) // 无延迟
-            back2.animate({ // 逐渐放大，并消失
-              rx: rx + 10,
-              ry: ry + 10,
-              opacity: 0.1,
-              repeat: true // 循环
-            }, 3000, 'easeCubic', null, 1000) // 1 秒延迟
-            back3.animate({ // 逐渐放大，并消失
-              rx: rx + 10,
-              ry: ry + 10,
-              opacity: 0.1,
-              repeat: true // 循环
-            }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
-          }
-        }, 'ellipse')
-
-        graph.node(function (node) {
-          let position = 'center'
-          let fill = '#C6E5FF'
-          let shape = 'ellipse'
-          if (!node.children) {
-            position = 'center'
-          }
-          if (node.label === '张磊') {
-            shape = 'background-animate'
-          }
-          if (node.spouse != '暂无') {
-            node.label = node.label + '[' + node.spouse + ']'
-          }
-          if (node.gender === '女') {
-            fill = '#FF80AB'
-          }
-          return {
-            label: node.label,
-            shape,
-            style: {
-              fill
-            },
-            labelCfg: {
-              position,
-              style: {
-                textAlign: 'center',
-                fontSize: 10
-              }
-            }
-          }
-        })
-
-        const tmp = {
-          'id': '1',
-          'label': '义学',
-          'gender': '男',
-          'spouse': '忠香',
-          'introduction': '内容...',
-          'children': [
-            {
-              'id': '2',
-              'label': '从新',
-              'gender': '男',
-              'spouse': '时枝',
-              'introduction': '内容...',
-              'children': [
-                {
-                  'id': '7',
-                  'label': '张磊',
-                  'gender': '男',
-                  'spouse': '暂无',
-                  'introduction': '内容...',
-                },
-                {
-                  'id': '8',
-                  'label': '张昕',
-                  'gender': '男',
-                  'spouse': '暂无',
-                  'introduction': '内容...',
-                }
-              ]
-            },
-            {
-              'id': '4',
-              'label': '建英',
-              'gender': '女',
-              'spouse': '暂无',
-              'introduction': '内容...',
-            },
-            {
-              'id': '5',
-              'label': '从秀',
-              'gender': '女',
-              'spouse': '暂无',
-              'introduction': '内容...',
-            },
-            {
-              'id': '6',
-              'label': '从爱',
-              'gender': '女',
-              'spouse': '暂无',
-              'introduction': '内容...',
-            }
-          ]
+          }, 'drag-canvas', 'zoom-canvas']
+      },
+      defaultNode: {
+        shape: 'ellipse',
+        size: [50, 30],
+        color: '#40a9ff',
+        subTreeSep: 20,
+        anchorPoints: [[0, 0.5], [1, 0.5]],
+        style: {
+          fill: '#C6E5FF',
+          stroke: '#5B8FF9'
+        },
+        labelCfg: {
+          position: 'center'
         }
-
-        graph.data(tmp)
-        graph.render()
-        graph.fitView()
+      },
+      defaultEdge: {
+        shape: 'cubic-vertical',
+        style: {
+          stroke: '#A3B1BF'
+        }
+      },
+      layout: {
+        type: 'compactBox',
+        direction: 'TB', // H / V / LR / RL / TB / BT
+        nodeSep: 50,
+        rankSep: 100
       }
-    )
+    })
+
+    G6.registerNode('circle-animate', {
+      afterDraw (cfg, group) {
+        const shape = group.get('children')[0]
+        shape.animate({
+          repeat: true,
+          onFrame (ratio) {
+            const diff = ratio <= 0.5 ? ratio * 10 : (1 - ratio) * 10
+            return {
+              rx: cfg.size[0] / 2 + diff,
+              ry: cfg.size[1] / 2 + diff,
+            }
+          }
+        }, 3000, 'easeCubic')
+      }
+    }, 'circle')
+
+    // 背景动画
+    G6.registerNode('background-animate', {
+      afterDraw (cfg, group) {
+        const rx = cfg.size[0] / 2
+        const ry = cfg.size[1] / 2
+        const back1 = group.addShape('ellipse', {
+          zIndex: -3,
+          attrs: {
+            x: 0,
+            y: 0,
+            rx,
+            ry,
+            fill: cfg.color,
+            opacity: 0.6
+          }
+        })
+        const back2 = group.addShape('ellipse', {
+          zIndex: -2,
+          attrs: {
+            x: 0,
+            y: 0,
+            rx,
+            ry,
+            fill: cfg.color,
+            opacity: 0.6
+          }
+        })
+        const back3 = group.addShape('ellipse', {
+          zIndex: -1,
+          attrs: {
+            x: 0,
+            y: 0,
+            rx,
+            ry,
+            fill: cfg.color,
+            opacity: 0.6
+          }
+        })
+        group.sort() // 排序，根据 zIndex 排序
+        back1.animate({ // 逐渐放大，并消失
+          rx: rx + 10,
+          ry: ry + 10,
+          opacity: 0.1,
+          repeat: true // 循环
+        }, 3000, 'easeCubic', null, 0) // 无延迟
+        back2.animate({ // 逐渐放大，并消失
+          rx: rx + 10,
+          ry: ry + 10,
+          opacity: 0.1,
+          repeat: true // 循环
+        }, 3000, 'easeCubic', null, 1000) // 1 秒延迟
+        back3.animate({ // 逐渐放大，并消失
+          rx: rx + 10,
+          ry: ry + 10,
+          opacity: 0.1,
+          repeat: true // 循环
+        }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
+      }
+    }, 'ellipse')
+
+    graph.node(function (node) {
+      let position = 'center'
+      let fill = '#C6E5FF'
+      let shape = 'ellipse'
+      if (!node.children) {
+        position = 'center'
+      }
+      if (node.name === '${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}') {
+        shape = 'background-animate'
+      }
+      if (node.spouse != '' && node.spouse != '暂无' && node.name.indexOf('[') < 0) {
+        node.name = node.name + '[' + node.spouse + ']'
+      }
+      if (node.gender === 'FEMALE') {
+        fill = '#FF80AB'
+        node.gender = '女'
+      } else {
+        node.gender = '男'
+      }
+      return {
+        label: node.name,
+        shape,
+        style: {
+          fill
+        },
+        labelCfg: {
+          position,
+          style: {
+            textAlign: 'center',
+            fontSize: 10
+          }
+        }
+      }
+    })
+
+    const tmp = ${json(data)}
+    graph.data(tmp)
+    graph.render()
+    graph.fitView()
+  })
 
 </script>
 </body>

@@ -72,15 +72,10 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>笔下光年 <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}  <span class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="lyear_pages_profile.html"><i class="mdi mdi-account"></i> 个人信息</a></li>
-                                <li><a href="lyear_pages_edit_pwd.html"><i class="mdi mdi-lock-outline"></i> 修改密码</a>
-                                </li>
-                                <li><a href="javascript:void(0)"><i class="mdi mdi-delete"></i> 清空缓存</a></li>
-                                <li class="divider"></li>
-                                <li><a href="lyear_pages_login.html"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
+                                <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
                                 </li>
                             </ul>
                         </li>
@@ -142,10 +137,10 @@
                                     </div>
 
                                   <div class="form-group">
-                                    <label class="col-md-3 control-label" for="group">群组<span
+                                    <label class="col-md-3 control-label" for="groupId">群组<span
                                             class="text-danger">*</span></label>
                                     <div class="col-md-7">
-                                      <select class="form-control selectpicker" id="group" name="group">
+                                      <select class="form-control selectpicker" id="groupId" name="groupId">
                                           @ for(group in groups){
                                         <option value="${group.id}">${group.name}</option>
                                           @ }
@@ -154,9 +149,9 @@
                                   </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="gender">父节点<span class="text-danger">*</span></label>
+                                        <label class="col-md-3 control-label" for="parentId">父节点<span class="text-danger">*</span></label>
                                         <div class="col-md-7">
-                                            <select class="form-control selectpicker" data-live-search="true">
+                                            <select class="form-control selectpicker" data-live-search="true" id="parentId" name="parentId">
                                                 @ for(user in users){
                                                 <option data-tokens="yixue" value="${user.id}">${user.name}</option>
                                                 @ }

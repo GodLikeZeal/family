@@ -30,6 +30,9 @@ public class GroupService {
   @Autowired
   UserRepository userRepository;
 
+  public Group findById(String id) {
+    return groupRepository.findById(id).orElse(Group.builder().build());
+  }
   /**
    * 查询分组
    * @return
@@ -48,6 +51,8 @@ public class GroupService {
   }
 
   public Group update(@NonNull Group group) {
+    Group group1 = findById(group.getId());
+    group.setCreateDate(group1.getCreateDate());
     return groupRepository.save(group);
   }
 
