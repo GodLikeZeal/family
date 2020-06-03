@@ -81,7 +81,7 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username} <span
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!} <span
                                         class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -267,11 +267,22 @@
       if (!node.children) {
         position = 'center'
       }
-      if (node.name === '${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}') {
+      if (node.name === '${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}') {
         shape = 'background-animate'
       }
-      if (node.spouse != '' && node.spouse != '暂无' && node.name.indexOf('[') < 0) {
-        node.name = node.name + '[' + node.spouse + ']'
+      if (node.spouse !== '' && node.spouse !== '暂无' && node.name.indexOf('[') < 0) {
+        if (node.spouse.indexOf(',') > 0) {
+          node.name = node.name + '[' + node.spouse.split(',')[0] + '...]'
+        } else if (node.spouse.indexOf('，') > 0) {
+          node.name = node.name + '[' + node.spouse.split('，')[0] + '...]'
+        } else if (node.spouse.indexOf('.') > 0) {
+          node.name = node.name + '[' + node.spouse.split('.')[0] + '...]'
+        } else if (node.spouse.indexOf('、') > 0) {
+          node.name = node.name + '[' + node.spouse.split('、')[0] + '...]'
+        } else {
+          node.name = node.name + '[' + node.spouse + ']'
+        }
+
       }
       if (node.gender === 'FEMALE') {
         fill = '#FF80AB'
@@ -296,7 +307,7 @@
     })
 
     const tmp = ${json(data)}
-    graph.data(tmp)
+      graph.data(tmp)
     graph.render()
     graph.fitView()
   })

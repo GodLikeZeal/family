@@ -162,4 +162,22 @@ public class MainController {
     groupService.remove(id);
     return true;
   }
+
+  @GetMapping("test")
+  @ResponseBody
+  public String test() {
+    a("1");
+    return b();
+  }
+
+  private void a(String a){
+    if (a.equals("1")) {
+      return;
+    }
+    System.out.print("aaa");
+  }
+
+  private String b() {
+    return "a";
+  }
 }

@@ -10,6 +10,7 @@ import com.zeal.family.repository.UserRepository;
 import lombok.NonNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +30,8 @@ import java.util.*;
 @Service
 public class UserService {
 
+  @Value("${app.default-password}")
+  private String defaultPassword;
   @Autowired
   UserRepository userRepository;
   @Autowired
@@ -42,6 +45,10 @@ public class UserService {
   public User findById(String id) {
     return userRepository.findById(id).orElse(User.builder().build());
   }
+
+  public User findByUsernameAndPassword(String username, String password) {
+    return userRepository.findByNameAndPassword(username, password);
+  }
   /**
    * 保存.
    *
@@ -49,7 +56,9 @@ public class UserService {
    * @return
    */
   public User save(@NonNull User user) {
-    user.setPassword(new BCryptPasswordEncoder().encode("123"));
+    if (StringUtils.isEmpty(user.getPassword())) {
+      user.setPassword(new BCryptPasswordEncoder().encode(defaultPassword));
+    }
     user.setRole(Role.USER);
     user.setCreateDate(LocalDate.now());
     return userRepository.save(user);

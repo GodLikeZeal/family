@@ -74,7 +74,7 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username}  <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
