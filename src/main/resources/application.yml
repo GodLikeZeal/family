@@ -2,7 +2,7 @@
 debug: false
 
 server:
-  port: 8091
+  port: 8090
 
 spring:
   profiles:
@@ -13,19 +13,42 @@ spring:
     allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
   data:
     mongodb:
-      host: ${HOST}
-      port: ${PORT}
-      database: ${DATABASE}
-      username: ${USERNAME}
-      password: ${PASSWORD}
-      authentication-database: ${AUTH_DATABASE}
+      host: localhost
+      port: 27017
+      database: family
+      username: username
+      password: password
+      authentication-database: admin
 
 beetl:
   suffix: html
 
 app:
-  username: ${ADMIN_USERNAME}
-  password: ${ADMIN_PASSWORD}
-  default-password: ${USER_PASSWORD}
+  username: admin
+  password: 123456
+  default-password: 123
 
 
+---
+spring:
+  profiles: prod
+  application:
+    name: family
+  main:
+    allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
+  data:
+    mongodb:
+      host: ${HOST}  #改成你的mongo的host
+      port: ${PORT}  #改成你的mongo的port
+      database: ${DATABASE}  #改成你的应用在mongo中的存储空间
+      username: ${USERNAME}  #改成你的mongo的登录用户名
+      password: ${PASSWORD}  #改成你的mongo的登录密码
+      authentication-database: ${AUTH_DATABASE}  #改成你的mongo的授权数据库
+
+beetl:
+  suffix: html
+
+app:
+  username: ${ADMIN_USERNAME}  #配置后台管理员默认账号
+  password: ${ADMIN_PASSWORD}  #配置后台管理员默认密码
+  default-password: ${USER_PASSWORD}  #配置后台添加新成员时，新成员登录的默认密码

@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <title>成员录入 - 张家坎族谱系统</title>
+    <title>成员录入 -Family 族谱系统</title>
     <link rel="icon" href="favicon.ico" type="image/ico">
-    <meta name="keywords" content="张家坎族谱系统">
-    <meta name="description" content="张家坎族谱系统">
+    <meta name="keywords" content="Family族谱系统">
+    <meta name="description" content="Family族谱系统">
     <meta name="author" content="zeal">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet"
@@ -25,7 +25,7 @@
             <!-- logo -->
             <div id="logo" class="sidebar-header">
                 <a href="index.html">
-                    <h4 class="h4 text-primary">张家坎族谱管理系统</h4>
+                    <h4 class="h4 text-primary">Family族谱管理系统</h4>
                 </a>
             </div>
             <div class="lyear-layout-sidebar-scroll">
@@ -72,7 +72,8 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span
+                                        class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
@@ -136,22 +137,24 @@
                                         </div>
                                     </div>
 
-                                  <div class="form-group">
-                                    <label class="col-md-3 control-label" for="groupId">群组<span
-                                            class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                      <select class="form-control selectpicker" id="groupId" name="groupId">
-                                          @ for(group in groups){
-                                        <option value="${group.id}">${group.name}</option>
-                                          @ }
-                                      </select>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="groupId">群组<span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-md-7">
+                                            <select class="form-control selectpicker" id="groupId" name="groupId">
+                                                @ for(group in groups){
+                                                <option value="${group.id}">${group.name}</option>
+                                                @ }
+                                            </select>
+                                        </div>
                                     </div>
-                                  </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="parentId">父节点<span class="text-danger">*</span></label>
+                                        <label class="col-md-3 control-label" for="parentId">父节点<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-md-7">
-                                            <select class="form-control selectpicker" data-live-search="true" id="parentId" name="parentId">
+                                            <select class="form-control selectpicker" data-live-search="true"
+                                                    id="parentId" name="parentId">
                                                 @ for(user in users){
                                                 <option data-tokens="yixue" value="${user.id}">${user.name}</option>
                                                 @ }

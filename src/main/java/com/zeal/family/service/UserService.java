@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 用户服务.
@@ -32,6 +33,8 @@ public class UserService {
 
   @Value("${app.default-password}")
   private String defaultPassword;
+  @Value("${app.username}")
+  private String username;
   @Autowired
   UserRepository userRepository;
   @Autowired
@@ -39,16 +42,17 @@ public class UserService {
 
 
   public List<User> findList() {
-    return userRepository.findAll();
+    return userRepository.findAll().stream().filter(u -> !Objects.equals(username, u.getName())).collect(Collectors.toList());
   }
 
   public User findById(String id) {
     return userRepository.findById(id).orElse(User.builder().build());
   }
 
-  public User findByUsernameAndPassword(String username, String password) {
-    return userRepository.findByNameAndPassword(username, password);
+  public List<User> findByUsername(String username) {
+    return userRepository.findByName(username);
   }
+
   /**
    * 保存.
    *
@@ -134,28 +138,38 @@ public class UserService {
     userRepository.deleteById(id);
   }
 
+  /**
+   * 构造树
+   * @return
+   */
   public UserBo getTree() {
-    List<User> users = userRepository.findAll();
+    List<User> users = this.findList();
     List<UserBo> userBos = new ArrayList<>();
     UserBo r = new UserBo();
     for (User u : users) {
       UserBo user = new UserBo();
-      BeanUtils.copyProperties(u,user);
+      BeanUtils.copyProperties(u, user);
       userBos.add(user);
-      if (StringUtils.isEmpty(u.getParentId()) && !u.getName().equals("张磊")) {
-        r= user;
+      if (StringUtils.isEmpty(u.getParentId()) && !u.getName().equals(username)) {
+        r = user;
       }
     }
     r.setChildren(treeCreate(r.getId(), userBos));
     return r;
   }
 
+  /**
+   * 递归生成树
+   * @param id id
+   * @param userBos 子集合
+   * @return
+   */
   public List<UserBo> treeCreate(String id, List<UserBo> userBos) {
     List<UserBo> bos = new ArrayList<>();
     Iterator<UserBo> iterator = userBos.iterator();
     while (iterator.hasNext()) {
       UserBo userBo = iterator.next();
-      if (id.equals(userBo.getParentId())) {
+      if (Objects.equals(id, userBo.getParentId())) {
 //        iterator.remove();
         userBo.setChildren(treeCreate(userBo.getId(), userBos));
         bos.add(userBo);

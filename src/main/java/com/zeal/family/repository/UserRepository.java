@@ -17,8 +17,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-  User findByNameAndPassword(String name, String password);
-
   List<User> findByName(String name);
 
   Page<User> findByGroupIdAndNameIsLike(String groupId, String name, Pageable pageable);
