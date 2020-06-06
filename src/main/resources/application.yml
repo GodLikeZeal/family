@@ -14,10 +14,10 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 27017
+      port: 27000
       database: family
-      username: username
-      password: password
+      username: zeal
+      password: zealsay
       authentication-database: admin
 
 beetl:
