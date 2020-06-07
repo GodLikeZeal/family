@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh">
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?bc04990a72f1dd0b20287368c447790d";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 <head>
     <meta charset="utf-8">
@@ -74,7 +83,8 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span
+                                        class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
@@ -99,7 +109,8 @@
                         <div class="card">
                             <div class="card-toolbar clearfix">
                                 <div class="toolbar-btn-action">
-                                    <a class="btn btn-primary m-r-5" href="/group_add.html"><i class="mdi mdi-plus"></i> 新增</a>
+                                    <a class="btn btn-primary m-r-5" href="/group_add.html"><i class="mdi mdi-plus"></i>
+                                        新增</a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -124,10 +135,12 @@
                                             <td class="text-center">${group.createDate}</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <a class="btn btn-xs btn-default" href="/group_edit.html?id=${group.id}" title="编辑"
+                                                    <a class="btn btn-xs btn-default"
+                                                       href="/group_edit.html?id=${group.id}" title="编辑"
                                                        data-toggle="tooltip"><i
                                                             class="mdi mdi-pencil"></i></a>
-                                                    <a class="btn btn-xs btn-default" onclick="remove('${group.id}')" title="删除"
+                                                    <a class="btn btn-xs btn-default" onclick="remove('${group.id}')"
+                                                       title="删除"
                                                        data-toggle="tooltip"><i
                                                             class="mdi mdi-window-close"></i></a>
                                                 </div>
@@ -195,28 +208,28 @@
 <script type="text/javascript" src="https://pan.zealsay.com/family/static/js/main.min.js"></script>
 
 <script type="text/javascript">
-  function remove (id) {
-    $.confirm({
-      title: '操作提示',
-      content: '确定要删除吗？',
-      buttons: {
-        confirm: {
-          text: '确定',
-          action: function () {
-            $.get("group/delete/"+id, function(data){
-              window.location.reload()
-            });
-          }
-        },
-        cancel: {
-          text: '取消',
-          action: function () {
+    function remove(id) {
+        $.confirm({
+            title: '操作提示',
+            content: '确定要删除吗？',
+            buttons: {
+                confirm: {
+                    text: '确定',
+                    action: function () {
+                        $.get("group/delete/" + id, function (data) {
+                            window.location.reload()
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
 
-          }
-        }
-      }
-    })
-  }
+                    }
+                }
+            }
+        })
+    }
 
 </script>
 </body>
