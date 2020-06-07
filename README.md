@@ -3,6 +3,8 @@
 `Family`族谱管理系统是基于`Spring Boot 2.2.4.RELEASE`最新版本构建的，数据库采用`MongoDB`，
 采用`Spring Security`来提供安全认证服务，前端渲染模板引擎为比较快的国产`Beetl`，数据图表渲染采用了
 蚂蚁金服数据可视化`AntV `来渲染数据。
+## 预览体验
+[族谱管理系统](https://zhang.zealsay.com)
 ## 快速部署
 ### 1、docker部署（推荐）
 - docker-compose编排文件
