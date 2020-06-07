@@ -38,8 +38,8 @@ spring:
     allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
   data:
     mongodb:
-      host: ${HOST}  #改成你的mongo的host
-      port: ${PORT}  #改成你的mongo的port
+      host: ${MONGO_HOST}  #改成你的mongo的host
+      port: ${MONGO_PORT}  #改成你的mongo的port
       database: ${DATABASE}  #改成你的应用在mongo中的存储空间
       username: ${USERNAME}  #改成你的mongo的登录用户名
       password: ${PASSWORD}  #改成你的mongo的登录密码
