@@ -114,5 +114,6 @@ app:
 ## 鸣谢
 - 感谢[笔下光年Admin](https://gitee.com/yinqi/Light-Year-Admin-Template)
 ## 交流
-<img src="https://pan.zealsay.com/20190716214941558000000.jpg" alt="Sample"  width="150" height="200">
+- 欢迎加入交流群：189361484
+- <img src="https://pan.zealsay.com/20190716214941558000000.jpg" alt="Sample"  width="150" height="200">
 
