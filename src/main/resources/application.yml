@@ -2,7 +2,7 @@
 debug: false
 
 server:
-  port: 8090
+  port: 8091
 
 spring:
   profiles:
