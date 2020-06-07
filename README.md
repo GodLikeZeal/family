@@ -19,8 +19,8 @@ services:
     depends_on:
       - mongo
     environment:
-      HOST: mongo                     #你的mongo的host地址，这里是内部容器名，你可以配置ip如47.101.43.123
-      PORT: 27017                     #你的mongo的端口号
+      MONGO_HOST: mongo                     #你的mongo的host地址，这里是内部容器名，你可以配置ip如47.101.43.123
+      MONGO_PORT: 27017                     #你的mongo的端口号
       DATABASE: family                #你的项目数据在mongo中存储的空间
       USERNAME: username              #你的mongo中授权的用户名
       PASSWORD: password              #你的mongo中授权的密码
