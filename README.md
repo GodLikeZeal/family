@@ -3,6 +3,8 @@
 `Family`族谱管理系统是基于`Spring Boot 2.2.4.RELEASE`最新版本构建的，数据库采用`MongoDB`，
 采用`Spring Security`来提供安全认证服务，前端渲染模板引擎为比较快的国产`Beetl`，数据图表渲染采用了
 蚂蚁金服数据可视化`AntV `来渲染数据。
+## 预览体验
+[族谱管理系统](https://zhang.zealsay.com)
 ## 快速部署
 ### 1、docker部署（推荐）
 - docker-compose编排文件
@@ -19,8 +21,8 @@ services:
     depends_on:
       - mongo
     environment:
-      HOST: mongo                     #你的mongo的host地址，这里是内部容器名，你可以配置ip如47.101.43.123
-      PORT: 27017                     #你的mongo的端口号
+      MONGO_HOST: mongo                     #你的mongo的host地址，这里是内部容器名，你可以配置ip如47.101.43.123
+      MONGO_PORT: 27017                     #你的mongo的端口号
       DATABASE: family                #你的项目数据在mongo中存储的空间
       USERNAME: username              #你的mongo中授权的用户名
       PASSWORD: password              #你的mongo中授权的密码
@@ -112,5 +114,6 @@ app:
 ## 鸣谢
 - 感谢[笔下光年Admin](https://gitee.com/yinqi/Light-Year-Admin-Template)
 ## 交流
-<img src="https://pan.zealsay.com/20190716214941558000000.jpg" alt="Sample"  width="150" height="200">
+- 欢迎加入交流群：189361484
+- <img src="https://pan.zealsay.com/20190716214941558000000.jpg" alt="Sample"  width="150" height="200">
 
