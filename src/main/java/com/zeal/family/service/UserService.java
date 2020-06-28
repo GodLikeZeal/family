@@ -131,6 +131,13 @@ public class UserService {
    * @param id
    */
   public void remove(String id) {
+    User user = findById(id);
+    if (Objects.isNull(user)) {
+      throw new RuntimeException("找不到该用户");
+    }
+    if (username.equals(user.getName())) {
+      throw new RuntimeException("无法删除默认管理员");
+    }
     List<User> users = userRepository.findAll(Example.of(User.builder().groupId(id).build()));
     if (!CollectionUtils.isEmpty(users)) {
       throw new RuntimeException("该节点下有子节点，无法删除");
