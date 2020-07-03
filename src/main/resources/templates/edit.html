@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="zh">
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?bc04990a72f1dd0b20287368c447790d";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <title>成员修改 -Family 族谱系统</title>
+    <title>成员修改 -张家坎族谱系统</title>
     <link rel="icon" href="favicon.ico" type="image/ico">
-    <meta name="keywords" content="Family族谱系统">
-    <meta name="description" content="Family族谱系统">
+    <meta name="keywords" content="张家坎族谱系统">
+    <meta name="description" content="张家坎族谱系统">
     <meta name="author" content="zeal">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://pan.zealsay.com/family/static/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-select\@1.13.9/dist/css/bootstrap-select.min.css">
-    <link href="css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="https://pan.zealsay.com/family/static/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://pan.zealsay.com/family/static/css/style.min.css" rel="stylesheet">
 </head>
 
 <body class="lyear-layout-sidebar-close">
@@ -25,7 +34,7 @@
             <!-- logo -->
             <div id="logo" class="sidebar-header">
                 <a href="index.html">
-                    <h4 class="h4 text-primary">Family族谱管理系统</h4>
+                    <h4 class="h4 text-primary">张家坎族谱管理系统</h4>
                 </a>
             </div>
             <div class="lyear-layout-sidebar-scroll">
@@ -72,7 +81,8 @@
                     <ul class="topbar-right">
                         <li class="dropdown dropdown-profile">
                             <a href="javascript:void(0)" data-toggle="dropdown">
-                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span class="caret"></span></span>
+                                <span>${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}  <span
+                                        class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li><a href="/logout"><i class="mdi mdi-logout-variant"></i> 退出登录</a>
@@ -105,14 +115,16 @@
                                         <label class="col-md-3 control-label" for="name">id<span
                                                 class="text-danger">*</span></label>
                                         <div class="col-md-7">
-                                            <input class="form-control" readonly type="text" id="id" name="id" value="${user.id}">
+                                            <input class="form-control" readonly type="text" id="id" name="id"
+                                                   value="${user.id}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="name">姓名<span
                                                 class="text-danger">*</span></label>
                                         <div class="col-md-7">
-                                            <input class="form-control" type="text" id="name" name="name" value="${user.name}"
+                                            <input class="form-control" type="text" id="name" name="name"
+                                                   value="${user.name}"
                                                    placeholder="请输入姓名..">
                                         </div>
                                     </div>
@@ -120,7 +132,8 @@
                                         <label class="col-md-3 control-label" for="gender">性别<span
                                                 class="text-danger">*</span></label>
                                         <div class="col-md-7">
-                                            <select class="form-control selectpicker" id="gender" name="gender" value="${user.gender}">
+                                            <select class="form-control selectpicker" id="gender" name="gender"
+                                                    value="${user.gender}">
                                                 <option value="MALE">男</option>
                                                 <option value="FEMALE">女</option>
                                             </select>
@@ -130,7 +143,8 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label" for="spouse">配偶名称</label>
                                         <div class="col-md-7">
-                                            <input class="form-control" type="text" id="spouse" name="spouse" value="${user.spouse}"
+                                            <input class="form-control" type="text" id="spouse" name="spouse"
+                                                   value="${user.spouse}"
                                                    placeholder="请输入配偶名称,没有则不填写..">
                                         </div>
                                     </div>
@@ -143,22 +157,25 @@
                                         </div>
                                     </div>
 
-                                  <div class="form-group">
-                                    <label class="col-md-3 control-label" for="groupId">群组<span
-                                            class="text-danger">*</span></label>
-                                    <div class="col-md-7">
-                                      <select class="form-control selectpicker" id="groupId" name="groupId" value="${user.groupId}">
-                                          @ for(group in groups){
-                                        <option value="${group.id}">${group.name}</option>
-                                          @ }
-                                      </select>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="groupId">群组<span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-md-7">
+                                            <select class="form-control selectpicker" id="groupId" name="groupId"
+                                                    value="${user.groupId}">
+                                                @ for(group in groups){
+                                                <option value="${group.id}">${group.name}</option>
+                                                @ }
+                                            </select>
+                                        </div>
                                     </div>
-                                  </div>
 
                                     <div class="form-group">
-                                        <label class="col-md-3 control-label" for="parentId">父节点<span class="text-danger">*</span></label>
+                                        <label class="col-md-3 control-label" for="parentId">父节点<span
+                                                class="text-danger">*</span></label>
                                         <div class="col-md-7">
-                                            <select class="form-control selectpicker" data-live-search="true" id="parentId" name="parentId" value="${user.parentId}">
+                                            <select class="form-control selectpicker" data-live-search="true"
+                                                    id="parentId" name="parentId" value="${user.parentId}">
                                                 @ for(user in users){
                                                 <option data-tokens="yixue" value="${user.id}">${user.name}</option>
                                                 @ }
@@ -186,12 +203,12 @@
     </div>
 </div>
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/bootstrap.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select\@1.13.9/dist/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
-<script type="text/javascript" src="js/main.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/main.min.js"></script>
 
 <script type="text/javascript">
 

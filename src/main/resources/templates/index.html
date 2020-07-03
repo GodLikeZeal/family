@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh">
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?bc04990a72f1dd0b20287368c447790d";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-    <title>首页 -Family 族谱系统</title>
+    <title>首页 -张家坎族谱系统</title>
     <link rel="icon" href="favicon.ico" type="image/ico">
-    <meta name="keywords" content="Family族谱系统">
-    <meta name="description" content="Family族谱系统">
+    <meta name="keywords" content="张家坎族谱系统">
+    <meta name="description" content="张家坎族谱系统">
     <meta name="author" content="zeal">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="css/style.min.css" rel="stylesheet">
+    <link href="https://pan.zealsay.com/family/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://pan.zealsay.com/family/static/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://pan.zealsay.com/family/static/css/style.min.css" rel="stylesheet">
     <style>
         .g6-tooltip {
             width: 300px;
@@ -35,7 +44,7 @@
 
             <!-- logo -->
             <div id="logo" class="sidebar-header">
-                <a href="index.html"><h4 class="h4 text-primary">Family族谱管理系统</h4></a>
+                <a href="index.html"><h4 class="h4 text-primary">张家坎族谱管理系统</h4></a>
             </div>
             <div class="lyear-layout-sidebar-scroll">
 
@@ -113,204 +122,204 @@
     </div>
 </div>
 
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/perfect-scrollbar.min.js"></script>
 <script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.2.9/build/g6.js"></script>
-<script type="text/javascript" src="js/main.min.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/main.min.js"></script>
 
 <!--图表插件-->
-<script type="text/javascript" src="js/Chart.js"></script>
+<script type="text/javascript" src="https://pan.zealsay.com/family/static/js/Chart.js"></script>
 <script type="text/javascript">
-  $(document).ready(function (e) {
-    const width = document.getElementById('container').scrollWidth
-    const height = document.getElementById('container').scrollHeight || 600
+    $(document).ready(function (e) {
+        const width = document.getElementById('container').scrollWidth
+        const height = document.getElementById('container').scrollHeight || 600
 
-    const graph = new G6.TreeGraph({
-      container: 'container',
-      width,
-      height,
-      pixelRatio: 2,
-      linkCenter: true,
-      modes: {
-        default: [{
-          type: 'collapse-expand',
-          onChange: function onChange (item, collapsed) {
-            const data = item.get('model').data
-            data.collapsed = collapsed
-            return true
-          }
-        },
-          {
-            type: 'tooltip',
-            formatText: function formatText (model) {
-              const text = '<div class="card"><div class="card-header bg-primary"><h4 class="text-center">' + model.name.split('[')[0] + '</h4></div><div class="card-body"><h6><span>性别：</span><span>' + model.gender + '</span></h6><h6><span>配偶：</span><span>' + model.spouse + '</span></h6><h6><span>备注：</span><span>' + model.introduction + '</span></h6></div></div>'
-              return text
+        const graph = new G6.TreeGraph({
+            container: 'container',
+            width,
+            height,
+            pixelRatio: 2,
+            linkCenter: true,
+            modes: {
+                default: [{
+                    type: 'collapse-expand',
+                    onChange: function onChange(item, collapsed) {
+                        const data = item.get('model').data
+                        data.collapsed = collapsed
+                        return true
+                    }
+                },
+                    {
+                        type: 'tooltip',
+                        formatText: function formatText(model) {
+                            const text = '<div class="card"><div class="card-header bg-primary"><h4 class="text-center">' + model.name.split('[')[0] + '</h4></div><div class="card-body"><h6><span>性别：</span><span>' + model.gender + '</span></h6><h6><span>配偶：</span><span>' + model.spouse + '</span></h6><h6><span>备注：</span><span>' + model.introduction + '</span></h6></div></div>'
+                            return text
+                        }
+                    },
+                    {
+                        type: 'edge-tooltip',
+                        formatText: function formatText(model) {
+                            const text = 'description: ' + model.label
+                            return text
+                        }
+                    }, 'drag-canvas', 'zoom-canvas']
+            },
+            defaultNode: {
+                shape: 'ellipse',
+                size: [50, 30],
+                color: '#40a9ff',
+                subTreeSep: 20,
+                anchorPoints: [[0, 0.5], [1, 0.5]],
+                style: {
+                    fill: '#C6E5FF',
+                    stroke: '#5B8FF9'
+                },
+                labelCfg: {
+                    position: 'center'
+                }
+            },
+            defaultEdge: {
+                shape: 'cubic-vertical',
+                style: {
+                    stroke: '#A3B1BF'
+                }
+            },
+            layout: {
+                type: 'compactBox',
+                direction: 'TB', // H / V / LR / RL / TB / BT
+                nodeSep: 50,
+                rankSep: 100
             }
-          },
-          {
-            type: 'edge-tooltip',
-            formatText: function formatText (model) {
-              const text = 'description: ' + model.label
-              return text
-            }
-          }, 'drag-canvas', 'zoom-canvas']
-      },
-      defaultNode: {
-        shape: 'ellipse',
-        size: [50, 30],
-        color: '#40a9ff',
-        subTreeSep: 20,
-        anchorPoints: [[0, 0.5], [1, 0.5]],
-        style: {
-          fill: '#C6E5FF',
-          stroke: '#5B8FF9'
-        },
-        labelCfg: {
-          position: 'center'
-        }
-      },
-      defaultEdge: {
-        shape: 'cubic-vertical',
-        style: {
-          stroke: '#A3B1BF'
-        }
-      },
-      layout: {
-        type: 'compactBox',
-        direction: 'TB', // H / V / LR / RL / TB / BT
-        nodeSep: 50,
-        rankSep: 100
-      }
-    })
+        })
 
-    G6.registerNode('circle-animate', {
-      afterDraw (cfg, group) {
-        const shape = group.get('children')[0]
-        shape.animate({
-          repeat: true,
-          onFrame (ratio) {
-            const diff = ratio <= 0.5 ? ratio * 10 : (1 - ratio) * 10
+        G6.registerNode('circle-animate', {
+            afterDraw(cfg, group) {
+                const shape = group.get('children')[0]
+                shape.animate({
+                    repeat: true,
+                    onFrame(ratio) {
+                        const diff = ratio <= 0.5 ? ratio * 10 : (1 - ratio) * 10
+                        return {
+                            rx: cfg.size[0] / 2 + diff,
+                            ry: cfg.size[1] / 2 + diff,
+                        }
+                    }
+                }, 3000, 'easeCubic')
+            }
+        }, 'circle')
+
+        // 背景动画
+        G6.registerNode('background-animate', {
+            afterDraw(cfg, group) {
+                const rx = cfg.size[0] / 2
+                const ry = cfg.size[1] / 2
+                const back1 = group.addShape('ellipse', {
+                    zIndex: -3,
+                    attrs: {
+                        x: 0,
+                        y: 0,
+                        rx,
+                        ry,
+                        fill: cfg.color,
+                        opacity: 0.6
+                    }
+                })
+                const back2 = group.addShape('ellipse', {
+                    zIndex: -2,
+                    attrs: {
+                        x: 0,
+                        y: 0,
+                        rx,
+                        ry,
+                        fill: cfg.color,
+                        opacity: 0.6
+                    }
+                })
+                const back3 = group.addShape('ellipse', {
+                    zIndex: -1,
+                    attrs: {
+                        x: 0,
+                        y: 0,
+                        rx,
+                        ry,
+                        fill: cfg.color,
+                        opacity: 0.6
+                    }
+                })
+                group.sort() // 排序，根据 zIndex 排序
+                back1.animate({ // 逐渐放大，并消失
+                    rx: rx + 10,
+                    ry: ry + 10,
+                    opacity: 0.1,
+                    repeat: true // 循环
+                }, 3000, 'easeCubic', null, 0) // 无延迟
+                back2.animate({ // 逐渐放大，并消失
+                    rx: rx + 10,
+                    ry: ry + 10,
+                    opacity: 0.1,
+                    repeat: true // 循环
+                }, 3000, 'easeCubic', null, 1000) // 1 秒延迟
+                back3.animate({ // 逐渐放大，并消失
+                    rx: rx + 10,
+                    ry: ry + 10,
+                    opacity: 0.1,
+                    repeat: true // 循环
+                }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
+            }
+        }, 'ellipse')
+
+        graph.node(function (node) {
+            let position = 'center'
+            let fill = '#C6E5FF'
+            let shape = 'ellipse'
+            if (!node.children) {
+                position = 'center'
+            }
+            if (node.name === '${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}') {
+                shape = 'background-animate'
+            }
+            if (node.spouse !== '' && node.spouse !== '暂无' && node.name.indexOf('[') < 0) {
+                if (node.spouse.indexOf(',') > 0) {
+                    node.name = node.name + '[' + node.spouse.split(',')[0] + '...]'
+                } else if (node.spouse.indexOf('，') > 0) {
+                    node.name = node.name + '[' + node.spouse.split('，')[0] + '...]'
+                } else if (node.spouse.indexOf('.') > 0) {
+                    node.name = node.name + '[' + node.spouse.split('.')[0] + '...]'
+                } else if (node.spouse.indexOf('、') > 0) {
+                    node.name = node.name + '[' + node.spouse.split('、')[0] + '...]'
+                } else {
+                    node.name = node.name + '[' + node.spouse + ']'
+                }
+
+            }
+            if (node.gender === 'FEMALE') {
+                fill = '#FF80AB'
+                node.gender = '女'
+            } else {
+                node.gender = '男'
+            }
             return {
-              rx: cfg.size[0] / 2 + diff,
-              ry: cfg.size[1] / 2 + diff,
+                label: node.name,
+                shape,
+                style: {
+                    fill
+                },
+                labelCfg: {
+                    position,
+                    style: {
+                        textAlign: 'center',
+                        fontSize: 10
+                    }
+                }
             }
-          }
-        }, 3000, 'easeCubic')
-      }
-    }, 'circle')
-
-    // 背景动画
-    G6.registerNode('background-animate', {
-      afterDraw (cfg, group) {
-        const rx = cfg.size[0] / 2
-        const ry = cfg.size[1] / 2
-        const back1 = group.addShape('ellipse', {
-          zIndex: -3,
-          attrs: {
-            x: 0,
-            y: 0,
-            rx,
-            ry,
-            fill: cfg.color,
-            opacity: 0.6
-          }
         })
-        const back2 = group.addShape('ellipse', {
-          zIndex: -2,
-          attrs: {
-            x: 0,
-            y: 0,
-            rx,
-            ry,
-            fill: cfg.color,
-            opacity: 0.6
-          }
-        })
-        const back3 = group.addShape('ellipse', {
-          zIndex: -1,
-          attrs: {
-            x: 0,
-            y: 0,
-            rx,
-            ry,
-            fill: cfg.color,
-            opacity: 0.6
-          }
-        })
-        group.sort() // 排序，根据 zIndex 排序
-        back1.animate({ // 逐渐放大，并消失
-          rx: rx + 10,
-          ry: ry + 10,
-          opacity: 0.1,
-          repeat: true // 循环
-        }, 3000, 'easeCubic', null, 0) // 无延迟
-        back2.animate({ // 逐渐放大，并消失
-          rx: rx + 10,
-          ry: ry + 10,
-          opacity: 0.1,
-          repeat: true // 循环
-        }, 3000, 'easeCubic', null, 1000) // 1 秒延迟
-        back3.animate({ // 逐渐放大，并消失
-          rx: rx + 10,
-          ry: ry + 10,
-          opacity: 0.1,
-          repeat: true // 循环
-        }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
-      }
-    }, 'ellipse')
 
-    graph.node(function (node) {
-      let position = 'center'
-      let fill = '#C6E5FF'
-      let shape = 'ellipse'
-      if (!node.children) {
-        position = 'center'
-      }
-      if (node.name === '${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}') {
-        shape = 'background-animate'
-      }
-      if (node.spouse !== '' && node.spouse !== '暂无' && node.name.indexOf('[') < 0) {
-        if (node.spouse.indexOf(',') > 0) {
-          node.name = node.name + '[' + node.spouse.split(',')[0] + '...]'
-        } else if (node.spouse.indexOf('，') > 0) {
-          node.name = node.name + '[' + node.spouse.split('，')[0] + '...]'
-        } else if (node.spouse.indexOf('.') > 0) {
-          node.name = node.name + '[' + node.spouse.split('.')[0] + '...]'
-        } else if (node.spouse.indexOf('、') > 0) {
-          node.name = node.name + '[' + node.spouse.split('、')[0] + '...]'
-        } else {
-          node.name = node.name + '[' + node.spouse + ']'
-        }
-
-      }
-      if (node.gender === 'FEMALE') {
-        fill = '#FF80AB'
-        node.gender = '女'
-      } else {
-        node.gender = '男'
-      }
-      return {
-        label: node.name,
-        shape,
-        style: {
-          fill
-        },
-        labelCfg: {
-          position,
-          style: {
-            textAlign: 'center',
-            fontSize: 10
-          }
-        }
-      }
+        const tmp = ${json(data)}
+            graph.data(tmp)
+        graph.render()
+        graph.fitView()
     })
-
-    const tmp = ${json(data)}
-      graph.data(tmp)
-    graph.render()
-    graph.fitView()
-  })
 
 </script>
 </body>
