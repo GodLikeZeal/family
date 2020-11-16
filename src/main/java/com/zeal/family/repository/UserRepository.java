@@ -19,6 +19,12 @@ public interface UserRepository extends MongoRepository<User, String> {
 
   List<User> findByName(String name);
 
+  List<User> findByGroupId(String id);
+
+  List<User> findByGroupIdAndName(String id, String name);
+
+  boolean existsUserByGroupIdAndParentIdIsNull(String id);
+
   Page<User> findByGroupIdAndNameIsLike(String groupId, String name, Pageable pageable);
 
   Page<User> findByGroupId(String groupId, Pageable pageable);

@@ -35,14 +35,22 @@ public class UserService {
   private String defaultPassword;
   @Value("${app.username}")
   private String username;
+  @Value("${app.default-group}")
+  private String groupName;
   @Autowired
   UserRepository userRepository;
   @Autowired
   GroupRepository groupRepository;
+  @Autowired
+  GroupService groupService;
 
 
   public List<User> findList() {
-    return userRepository.findAll().stream().filter(u -> !Objects.equals(username, u.getName())).collect(Collectors.toList());
+    return userRepository.findAll();
+  }
+
+  public List<User> findListByGroupId(String id) {
+    return userRepository.findByGroupId(id);
   }
 
   public User findById(String id) {
@@ -60,10 +68,40 @@ public class UserService {
    * @return
    */
   public User save(@NonNull User user) {
+
+    List<User> users = userRepository
+        .findByGroupIdAndName(user.getGroupId().trim(), user.getName().trim());
+    if (!CollectionUtils.isEmpty(users)) {
+      throw new RuntimeException("不可重复添加");
+    }
+
+    if (StringUtils.isEmpty(user.getParentId())) {
+      if (userRepository.existsUserByGroupIdAndParentIdIsNull(user.getGroupId().trim())) {
+        throw new RuntimeException("已存在根节点，请选择长辈信息！");
+      }
+      user.setParentId(null);
+    }
+
     if (StringUtils.isEmpty(user.getPassword())) {
       user.setPassword(new BCryptPasswordEncoder().encode(defaultPassword));
     }
-    user.setRole(Role.USER);
+
+    Optional<Group> group = groupRepository.findById(user.getGroupId().trim());
+
+    if (!StringUtils.isEmpty(user.getParentId())) {
+      Optional<User> parent = userRepository.findById(user.getParentId());
+      String id = parent.map(User::getId).orElse(null);
+      String groupId = group.isPresent() ? group.get().getId() : "";
+      if (!groupId.equals(id)) {
+        throw new RuntimeException("长辈信息不在该群组范围中...");
+      }
+    }
+
+    user.setGroupName(group.isPresent() ? group.get().getName() : "");
+
+    if (user.getRole() == null) {
+      user.setRole(Role.USER);
+    }
     user.setCreateDate(LocalDate.now());
     return userRepository.save(user);
   }
@@ -147,17 +185,32 @@ public class UserService {
 
   /**
    * 构造树
+   *
    * @return
    */
   public UserBo getTree() {
-    List<User> users = this.findList();
+    List<Group> groups = groupService.findListByName(groupName);
+    if (CollectionUtils.isEmpty(groups)) {
+      throw new RuntimeException("默认群组不存在！");
+    }
+    String id = groups.get(0).getId();
+    return getTree(id);
+  }
+
+  /**
+   * 构造树
+   *
+   * @return
+   */
+  public UserBo getTree(String id) {
+    List<User> users = this.findListByGroupId(id);
     List<UserBo> userBos = new ArrayList<>();
     UserBo r = new UserBo();
     for (User u : users) {
       UserBo user = new UserBo();
       BeanUtils.copyProperties(u, user);
       userBos.add(user);
-      if (StringUtils.isEmpty(u.getParentId()) && !u.getName().equals(username)) {
+      if (StringUtils.isEmpty(u.getParentId())) {
         r = user;
       }
     }
@@ -167,7 +220,8 @@ public class UserService {
 
   /**
    * 递归生成树
-   * @param id id
+   *
+   * @param id      id
    * @param userBos 子集合
    * @return
    */

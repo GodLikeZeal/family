@@ -2,6 +2,7 @@ package com.zeal.family.repository;
 
 import com.zeal.family.entiy.Group;
 import com.zeal.family.entiy.User;
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface GroupRepository extends MongoRepository<Group, String> {
+
+  List<Group> findByName(String name);
+
 }

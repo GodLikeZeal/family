@@ -1,6 +1,8 @@
 package com.zeal.family.entiy;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +31,7 @@ public class Group {
   /**
    * 名称.
    */
+  @NotBlank(message = "群组名称不为空")
   private String name;
 
   /**

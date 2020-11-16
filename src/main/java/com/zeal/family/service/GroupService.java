@@ -40,6 +40,14 @@ public class GroupService {
   public List<Group> findList() {
     return groupRepository.findAll();
   }
+
+  /**
+   * 查询分组
+   * @return
+   */
+  public List<Group> findListByName(String name) {
+    return groupRepository.findByName(name);
+  }
   /**
    * 保存
    * @param group

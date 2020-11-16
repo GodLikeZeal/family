@@ -27,6 +27,7 @@ app:
   username: admin
   password: 123456
   default-password: 123
+  default-group:  默认分组 #配置后台初始化的群组
 
 
 ---
@@ -52,3 +53,4 @@ app:
   username: ${ADMIN_USERNAME}  #配置后台管理员默认账号
   password: ${ADMIN_PASSWORD}  #配置后台管理员默认密码
   default-password: ${USER_PASSWORD}  #配置后台添加新成员时，新成员登录的默认密码
+  default-group: ${GROUP_NAME}  #配置后台初始化的群组

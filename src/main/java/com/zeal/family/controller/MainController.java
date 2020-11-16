@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,10 +27,17 @@ public class MainController {
   GroupService groupService;
 
   @GetMapping("/")
-  public ModelAndView defaultPage() {
+  public ModelAndView defaultPage(@RequestParam(required = false) String id) {
     ModelAndView mv = new ModelAndView();
-    UserBo u = userService.getTree();
+    List<Group> list = groupService.findList();
+    UserBo u;
+    if (StringUtils.isEmpty(id)) {
+       u = userService.getTree();
+    } else {
+      u = userService.getTree(id);
+    }
     mv.addObject("data",u);
+    mv.addObject("groups",list);
     mv.setViewName("index.html");
     return mv;
   }
@@ -40,10 +48,17 @@ public class MainController {
   }
 
   @GetMapping("index.html")
-  public ModelAndView index() {
+  public ModelAndView index(@RequestParam(required = false) String id) {
     ModelAndView mv = new ModelAndView();
-    UserBo u = userService.getTree();
+    List<Group> list = groupService.findList();
+    UserBo u;
+    if (StringUtils.isEmpty(id)) {
+      u = userService.getTree();
+    } else {
+      u = userService.getTree(id);
+    }
     mv.addObject("data",u);
+    mv.addObject("groups",list);
     mv.setViewName("index.html");
     return mv;
   }
@@ -53,6 +68,7 @@ public class MainController {
     ModelAndView mv = new ModelAndView();
     List<Group> list = groupService.findList();
     List<User> users = userService.findList();
+    users.forEach(user -> user.setName(user.getName() + " [" +user.getGroupName() + "]" ));
     mv.addObject("groups",list);
     mv.addObject("users",users);
     mv.setViewName("add.html");
@@ -73,7 +89,7 @@ public class MainController {
   }
 
   @PostMapping("user/update")
-  public ModelAndView updateUser(User user) {
+  public ModelAndView updateUser(@Validated User user) {
     ModelAndView mv = new ModelAndView();
     userService.update(user);
     Mypage mypage = userService.findPage(1,10,null,null);
@@ -117,7 +133,7 @@ public class MainController {
   }
 
   @PostMapping("group/update")
-  public ModelAndView updateGroup(Group group) {
+  public ModelAndView updateGroup(@Validated Group group) {
     ModelAndView mv = new ModelAndView();
     groupService.update(group);
     Mypage page = groupService.findPage(1,10);
@@ -138,13 +154,13 @@ public class MainController {
   }
 
   @PostMapping("group/add")
-  public String groupAdd(Group group) {
+  public String groupAdd(@Validated Group group) {
     groupService.save(group);
     return "group_add_success.html";
   }
 
   @PostMapping("user/add")
-  public String userAdd(User user) {
+  public String userAdd(@Validated User user) {
     userService.save(user);
     return "user_add_success.html";
   }

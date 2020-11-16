@@ -85,6 +85,22 @@
                             <span class="lyear-toggler-bar"></span>
                         </div>
                         <span class="navbar-page-title"> 后台首页 </span>
+
+                        <div class="clearfix">
+                            <form class="form-inline pull-right" action="/index.html" method="get">
+                                <div class="form-group">
+                                    <select class="form-control selectpicker" name="id"
+                                            data-live-search="true">
+                                        @ for(group in groups){
+                                        <option value="${group.id}">${group.name}</option>
+                                        @ }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-default" type="submit">查询</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     <ul class="topbar-right">
@@ -133,7 +149,7 @@
 <script type="text/javascript">
     $(document).ready(function (e) {
         const width = document.getElementById('container').scrollWidth
-        const height = document.getElementById('container').scrollHeight || 600
+        const height = document.getElementById('container').scrollHeight || 700
 
         const graph = new G6.TreeGraph({
             container: 'container',
@@ -279,7 +295,7 @@
             if (node.name === '${session.SPRING_SECURITY_CONTEXT.authentication.principal.username!}') {
                 shape = 'background-animate'
             }
-            if (node.spouse !== '' && node.spouse !== '暂无' && node.name.indexOf('[') < 0) {
+            if (node.spouse !== null && node.spouse !== '' && node.spouse !== '暂无' && node.name.indexOf('[') < 0) {
                 if (node.spouse.indexOf(',') > 0) {
                     node.name = node.name + '[' + node.spouse.split(',')[0] + '...]'
                 } else if (node.spouse.indexOf('，') > 0) {
@@ -292,12 +308,17 @@
                     node.name = node.name + '[' + node.spouse + ']'
                 }
 
+            } else {
+                node.spouse = '暂无'
             }
             if (node.gender === 'FEMALE') {
                 fill = '#FF80AB'
                 node.gender = '女'
             } else {
                 node.gender = '男'
+            }
+            if (node.introduction == null || node.introduction == '' || node.introduction == undefined || node.introduction == 'undefined') {
+                node.introduction = '暂无'
             }
             return {
                 label: node.name,

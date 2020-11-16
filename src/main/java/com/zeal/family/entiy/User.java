@@ -3,6 +3,7 @@ package com.zeal.family.entiy;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zeal.family.enums.Gender;
 import com.zeal.family.enums.Role;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class User {
   /**
    * 姓名.
    */
+  @NotBlank(message = "名称不为空")
   private String name;
 
   /**
@@ -79,6 +81,7 @@ public class User {
   /**
    * 分支id.
    */
+  @NotBlank(message = "分组信息不为空")
   private String groupId;
 
   /**
