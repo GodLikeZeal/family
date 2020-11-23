@@ -16,8 +16,8 @@ spring:
       host: localhost
       port: 27000
       database: family
-      username: zeal
-      password: zealsay
+      username: root
+      password: 123
       authentication-database: admin
 
 beetl:
