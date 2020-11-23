@@ -90,7 +90,7 @@ public class UserService {
 
     if (!StringUtils.isEmpty(user.getParentId())) {
       Optional<User> parent = userRepository.findById(user.getParentId());
-      String id = parent.map(User::getId).orElse(null);
+      String id = parent.map(User::getGroupId).orElse(null);
       String groupId = group.isPresent() ? group.get().getId() : "";
       if (!groupId.equals(id)) {
         throw new RuntimeException("长辈信息不在该群组范围中...");

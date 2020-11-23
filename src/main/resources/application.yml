@@ -13,11 +13,11 @@ spring:
     allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
   data:
     mongodb:
-      host: localhost
+      host: 47.105.51.137
       port: 27000
-      database: family
-      username: root
-      password: 123
+      database: family_demo
+      username: zeal
+      password: zealsay
       authentication-database: admin
 
 beetl:
